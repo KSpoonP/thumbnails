@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Thumb Upload — Bookmarklet</title>
+  <title>Scratch Thumbnails - Redone</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -249,7 +249,7 @@
   };
 
   // Base bookmarklet — theme key gets injected before the JS runs
-  var BASE_BOOKMARKLET = 'javascript:(function(){var t="%THEME%";var s=document.createElement("script");s.src="//is.gd/thumb2";s.onload=function(){if(window.__tbThemeOverride)window.__tbThemeOverride(t);};window.__tbPendingTheme=t;void document.head.appendChild(s);})();';
+  var BASE_BOOKMARKLET = 'javascript:(function(){var t="%THEME%";var s=document.createElement("script");s.src="//is.gd/scrthu";s.onload=function(){if(window.__tbThemeOverride)window.__tbThemeOverride(t);};window.__tbPendingTheme=t;void document.head.appendChild(s);})();';
 
   function applyTheme(key) {
     var t = THEMES[key];
