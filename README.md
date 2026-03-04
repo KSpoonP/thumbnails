@@ -9,7 +9,7 @@ A bookmarklet that lets you set **animated thumbnails** on your Scratch projects
 
 ## // SETUP
 
-**1.** Open the [landing page](https://worldlanguages.github.io/animatedThumbnailsBookmarklet/) in your browser.
+**1.** Open the [landing page](https://kspoonp.github.io/thumbnails/) in your browser.
 
 **2.** Show your bookmarks bar if it's hidden.
 - Windows / Linux → `Ctrl + Shift + B`
@@ -63,7 +63,7 @@ README.md      → you are here
 - Only works on projects **you own** — Scratch blocks thumbnail edits on others
 - Use a **downloaded image**, not a URL — the API requires a file upload
 - If upload fails, try a **smaller image** — Scratch has a size limit
-- We highly reccomend converting **.png, .jpg, and .jpeg** image files to **.webp** with (ezgif)[https://exgif.com/webp-maker/]
+- We highly reccomend converting **.png, .jpg, and .jpeg** image files to **.webp** with [ezgif](https://exgif.com/webp-maker/)
 - Tested on Chrome, Firefox, Edge, Safari.
 
 ---
@@ -80,4 +80,14 @@ is.gd/scrthu   → script host shortlink
 
 ---
 
+## // CREDITS
+
+Original code by [@WorldLanguages GitHub](https://github.com/WorldLanguages/) same person as [@World_Languages on Scratch](https://scratch.mit.edu/users/World_Languages/).
+
+Complete remodel by [@kspoonp on GitHub](https://github.com/KSpoonP/) also known as [@sorees on Scratch](https://scratch.mit.edu/users/sorees/).
+
+### // QUICK TIP
+
+When adding the bookmark;
 *// drag the button — do not click it*
+Don't make yourself look stupid.
