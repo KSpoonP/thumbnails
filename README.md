@@ -52,7 +52,7 @@ Pick a theme on the landing page — your choice is saved automatically and bake
 
 ```
 index.html     → landing page + drag-to-bookmark button
-thumb2.js      → bookmarklet source (hosted via is.gd/scrthu)
+code.js      → bookmarklet source (hosted via is.gd/scrthu)
 README.md      → you are here
 ```
 
@@ -63,7 +63,8 @@ README.md      → you are here
 - Only works on projects **you own** — Scratch blocks thumbnail edits on others
 - Use a **downloaded image**, not a URL — the API requires a file upload
 - If upload fails, try a **smaller image** — Scratch has a size limit
-- Tested on Chrome, Firefox, Edge, Safari
+- We highly reccomend converting **.png, .jpg, and .jpeg** image files to **.webp** with (ezgif)[https://exgif.com/webp-maker/]
+- Tested on Chrome, Firefox, Edge, Safari.
 
 ---
 
