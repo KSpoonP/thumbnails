@@ -1,32 +1,291 @@
-<html lang="en"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thumb Upload — Bookmarklet</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<!-- Begin Jekyll SEO tag v2.3.0 -->
-<title>animatedThumbnailsBookmarklet</title>
-<meta property="og:title" content="animatedThumbnailsBookmarklet">
-<meta property="og:locale" content="en_US">
-<link rel="canonical" href="https://worldlanguages.github.io/animatedThumbnailsBookmarklet/">
-<meta property="og:url" content="https://worldlanguages.github.io/animatedThumbnailsBookmarklet/">
-<meta property="og:site_name" content="animatedThumbnailsBookmarklet">
-<script type="application/ld+json">
-{"name":"animatedThumbnailsBookmarklet","description":null,"author":null,"@type":"WebSite","url":"https://worldlanguages.github.io/animatedThumbnailsBookmarklet/","image":null,"publisher":null,"headline":"animatedThumbnailsBookmarklet","dateModified":null,"datePublished":null,"sameAs":null,"mainEntityOfPage":null,"@context":"http://schema.org"}</script>
-<!-- End Jekyll SEO tag -->
+    :root {
+      --accent:       #e8ff47;
+      --accent-text:  #000;
+      --panel:        #111;
+      --bg:           #0a0a0a;
+      --surface:      #161616;
+      --border:       #2a2a2a;
+      --text:         #f0f0f0;
+      --sub:          #555;
+    }
 
-    <style class="anchorjs"></style><link href="/animatedThumbnailsBookmarklet/assets/css/style.css?v=2bda4bc6dfc0cfbb6a1bdd45071b3149f0485179" rel="stylesheet">
-  </head>
-  <body>
-    <div class="container-lg px-3 my-5 markdown-body">
-      
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      transition: background 0.3s, color 0.3s;
+    }
 
-      <h1 id="animatedthumbnailsbookmarklet">Animated Thumbnail Bookmarklet</h1><h3 id="drag-and-drop-the-link-below-to-your-bookmarks-bar">Drag and drop the link below to your bookmarks/favorites bar. If you don't see the bar, press Ctrl+Shift+B (Windows) or Cmd+Shift+B (Mac).<a class="anchorjs-link " href="#drag-and-drop-the-link-below-to-your-bookmarks-bar" aria-label="Anchor link for: drag and drop the link below to your bookmarks bar" data-anchorjs-icon="" style="font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 1em; line-height: 1; font-family: anchorjs-icons; padding-left: 0.375em;"></a></h3>
-<h3><a href='javascript:x=document.createElement("script");x.src="//is.gd/thumb2"; void document.getElementsByTagName("head")[0].appendChild(x);'>Animated thumbnail set</a></h3><h3>Then click it in any of your Scratch projects and follow the indicated steps.</h3></div>
-    <script src="/animatedThumbnailsBookmarklet/assets/javascript/anchor-js/anchor.min.js"></script>
-    <script>anchors.add();</script>
-  
+    /* ── CARD ── */
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 40px;
+      width: 100%;
+      max-width: 480px;
+    }
 
+    .title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      letter-spacing: 3px;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .title em { color: var(--accent); font-style: normal; }
 
+    .sub {
+      font-size: 0.6rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--sub);
+      margin-bottom: 32px;
+    }
 
+    /* ── STEP ── */
+    .step {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    .step-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      color: var(--accent);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 24px;
+    }
+    .step-text {
+      font-size: 0.68rem;
+      letter-spacing: 1px;
+      color: var(--sub);
+      line-height: 1.7;
+      padding-top: 4px;
+    }
+    .step-text strong { color: var(--text); font-weight: 700; }
 
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 28px 0;
+    }
 
-</body></html>
+    /* ── DRAG BUTTON ── */
+    .drag-label {
+      font-size: 0.58rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--sub);
+      margin-bottom: 12px;
+    }
+
+    .bookmarklet-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: var(--accent-text);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 13px 20px;
+      border-radius: 2px;
+      border: none;
+      cursor: grab;
+      transition: filter 0.15s, transform 0.15s;
+      user-select: none;
+      -webkit-user-drag: element;
+    }
+    .bookmarklet-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .bookmarklet-btn:active { cursor: grabbing; transform: translateY(0); }
+    .bookmarklet-btn .icon { font-size: 1rem; }
+
+    .drag-hint {
+      font-size: 0.58rem;
+      letter-spacing: 2px;
+      color: var(--sub);
+      margin-top: 10px;
+    }
+    .drag-hint span { color: var(--accent); }
+
+    /* ── THEME TOGGLE ── */
+    .theme-row {
+      margin-top: 28px;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+    .theme-label {
+      font-size: 0.55rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--sub);
+      margin-bottom: 10px;
+    }
+    .theme-options {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .theme-opt {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--sub);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 7px 12px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .theme-opt:hover { color: var(--text); border-color: var(--text); }
+    .theme-opt.active { color: var(--accent); border-color: var(--accent); }
+    .theme-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      margin-top: 24px;
+      font-size: 0.55rem;
+      letter-spacing: 2px;
+      color: var(--sub);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="title">THUMB <em>UPLOAD</em></div>
+    <div class="sub">// scratch thumbnail bookmarklet</div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">
+        <strong>Show your bookmarks bar</strong> if hidden —
+        press <strong>Ctrl+Shift+B</strong> on Windows or <strong>Cmd+Shift+B</strong> on Mac.
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">
+        <strong>Drag the button below</strong> up to your bookmarks bar and drop it there.
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">
+        <strong>Open any Scratch project</strong> you own, then click the bookmark. A popup will appear — select your image and you're done.
+      </div>
+    </div>
+
+    <hr class="divider"/>
+
+    <div class="drag-label">// drag this to your bookmarks bar</div>
+    <a id="bookmarklet-link" class="bookmarklet-btn" href="#">
+      <span class="icon">🖼</span> Animated Thumbnail Set
+    </a>
+    <div class="drag-hint">drag ↑ to your bar &nbsp;·&nbsp; or right-click → <span>bookmark this link</span></div>
+
+    <!-- THEME PICKER -->
+    <div class="theme-row">
+      <div class="theme-label">// theme</div>
+      <div class="theme-options">
+        <button class="theme-opt active" data-theme="default">
+          <span class="theme-dot" style="background:#e8ff47"></span>DEFAULT
+        </button>
+        <button class="theme-opt" data-theme="midnight">
+          <span class="theme-dot" style="background:#a855f7"></span>MIDNIGHT
+        </button>
+        <button class="theme-opt" data-theme="blood">
+          <span class="theme-dot" style="background:#ff2233"></span>BLOOD
+        </button>
+        <button class="theme-opt" data-theme="moon">
+          <span class="theme-dot" style="background:#c8c8c8"></span>MOON
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">// drag the button — do not click it &nbsp;·&nbsp; works on chrome, firefox, edge, safari</div>
+
+<script>
+  var THEMES = {
+    default:  { accent:'#e8ff47', accentText:'#000', panel:'#111',    bg:'#0a0a0a', surface:'#161616', border:'#2a2a2a', text:'#f0f0f0', sub:'#555' },
+    midnight: { accent:'#a855f7', accentText:'#fff', panel:'#0e0b1a', bg:'#080612', surface:'#130d24', border:'#2d1f4e', text:'#e8d5ff', sub:'#5b3f8a' },
+    blood:    { accent:'#ff2233', accentText:'#fff', panel:'#110808', bg:'#0a0404', surface:'#180a0a', border:'#3a1010', text:'#ffd4d4', sub:'#6b2020' },
+    moon:     { accent:'#c8c8c8', accentText:'#000', panel:'#0f0f0f', bg:'#080808', surface:'#181818', border:'#2e2e2e', text:'#e8e8e8', sub:'#4a4a4a' },
+  };
+
+  // Base bookmarklet — theme key gets injected before the JS runs
+  var BASE_BOOKMARKLET = 'javascript:(function(){var t="%THEME%";var s=document.createElement("script");s.src="//is.gd/thumb2";s.onload=function(){if(window.__tbThemeOverride)window.__tbThemeOverride(t);};window.__tbPendingTheme=t;void document.head.appendChild(s);})();';
+
+  function applyTheme(key) {
+    var t = THEMES[key];
+    var r = document.documentElement;
+    r.style.setProperty('--accent',      t.accent);
+    r.style.setProperty('--accent-text', t.accentText);
+    r.style.setProperty('--panel',       t.panel);
+    r.style.setProperty('--bg',          t.bg);
+    r.style.setProperty('--surface',     t.surface);
+    r.style.setProperty('--border',      t.border);
+    r.style.setProperty('--text',        t.text);
+    r.style.setProperty('--sub',         t.sub);
+
+    // Update bookmarklet href with baked-in theme
+    var href = BASE_BOOKMARKLET.replace('%THEME%', key);
+    document.getElementById('bookmarklet-link').href = href;
+
+    // Active state on buttons
+    document.querySelectorAll('.theme-opt').forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.theme === key);
+    });
+
+    try { localStorage.setItem('tb-page-theme', key); } catch(e){}
+  }
+
+  // Load saved theme
+  var saved = 'default';
+  try { saved = localStorage.getItem('tb-page-theme') || 'default'; } catch(e){}
+  if (!THEMES[saved]) saved = 'default';
+  applyTheme(saved);
+
+  // Theme button clicks
+  document.querySelectorAll('.theme-opt').forEach(function(btn) {
+    btn.addEventListener('click', function() { applyTheme(this.dataset.theme); });
+  });
+</script>
+
+</body>
+</html>
